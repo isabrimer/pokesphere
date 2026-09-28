@@ -1,6 +1,11 @@
 # PokéSphere 🔴⚪ | Pokédex Definitiva
 
-Una aplicación web moderna, interactiva y completa inspirada en el universo Pokémon, construida con HTML5, CSS3 moderno y Vanilla JavaScript.
+[![GitHub Pages](https://img.shields.io/badge/Demo-Online%20(GitHub%20Pages)-success?style=for-the-badge&logo=github)](https://isabrimer.github.io/pokesphere/)
+
+**🔗 Enlace en vivo para jugar y explorar:** [https://isabrimer.github.io/pokesphere/](https://isabrimer.github.io/pokesphere/)  
+**📁 Repositorio en GitHub:** [https://github.com/isabrimer/pokesphere](https://github.com/isabrimer/pokesphere)
+
+Una aplicación web moderna, interactiva y completa inspirada en el universo Pokémon, construida con HTML5, CSS3 moderno y Vanilla JavaScript. Adaptable a smartphones, tablets y PC.
 
 ## 🌟 Características Principales
 
