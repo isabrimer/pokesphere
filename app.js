@@ -82,12 +82,13 @@ const state = {
 // ELEMENTOS DEL DOM
 // ==========================================
 const DOM = {
-  // Nav
+  // Nav & PWA
   btnLogo: document.getElementById('btnLogo'),
   navTabs: document.querySelectorAll('.nav-tab'),
   favCount: document.getElementById('favCount'),
   teamCount: document.getElementById('teamCount'),
   btnRandom: document.getElementById('btnRandom'),
+  btnInstallApp: document.getElementById('btnInstallApp'),
   btnAudioToggle: document.getElementById('btnAudioToggle'),
   audioIconOn: document.getElementById('audioIconOn'),
   audioIconOff: document.getElementById('audioIconOff'),
@@ -1120,3 +1121,62 @@ function showToast(message) {
     DOM.toast.classList.add('hidden');
   }, 2500);
 }
+
+// ==========================================
+// REGISTRO DE PWA Y SERVICE WORKER
+// ==========================================
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then((reg) => {
+        console.log('✅ Service Worker de PokéSphere registrado con éxito:', reg.scope);
+      })
+      .catch((err) => {
+        console.warn('⚠️ No se pudo registrar el Service Worker:', err);
+      });
+  });
+}
+
+// Gestión de instalación PWA (beforeinstallprompt)
+let deferredInstallPrompt = null;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  // Evitar que el mini-infobar aparezca por defecto
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  
+  // Mostrar botón personalizado de instalación
+  if (DOM.btnInstallApp) {
+    DOM.btnInstallApp.classList.remove('hidden');
+  }
+});
+
+if (DOM.btnInstallApp) {
+  DOM.btnInstallApp.addEventListener('click', async () => {
+    playSound('click');
+    if (!deferredInstallPrompt) {
+      showToast('📲 Para instalar en iOS: pulsa "Compartir" y luego "Agregar a inicio"');
+      return;
+    }
+    
+    deferredInstallPrompt.prompt();
+    const { outcome } = await deferredInstallPrompt.userChoice;
+    
+    if (outcome === 'accepted') {
+      showToast('🎉 ¡Instalando PokéSphere!');
+    }
+    
+    deferredInstallPrompt = null;
+    DOM.btnInstallApp.classList.add('hidden');
+  });
+}
+
+window.addEventListener('appinstalled', () => {
+  playSound('success');
+  showToast('✅ ¡PokéSphere instalado en tu dispositivo!');
+  if (DOM.btnInstallApp) {
+    DOM.btnInstallApp.classList.add('hidden');
+  }
+  deferredInstallPrompt = null;
+});
+

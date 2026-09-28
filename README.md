@@ -37,7 +37,12 @@ Una aplicación web moderna, interactiva y completa inspirada en el universo Pok
    - Marca con un corazón tus Pokémon favoritos para acceder a ellos rápidamente en su propia pestaña.
    - Persistencia automática en el navegador con `localStorage`.
 
-6. **Audio y Efectos**:
+6. **PWA Instalable (Progressive Web App)**:
+   - Se puede instalar como una aplicación nativa en Android, iOS, Windows y macOS directamente desde el navegador.
+   - Funciona sin conexión (Offline) para la interfaz y recursos guardados en caché mediante Service Worker (`sw.js`).
+   - Botón directo de instalación integrado en la barra superior.
+
+7. **Audio y Efectos**:
    - Sonidos retro sintetizados mediante la Web Audio API (sin dependencias externas).
    - Botón de silenciar/activar audio en la barra superior.
 

@@ -8,6 +8,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Press+Start+2P&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ef4444">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="PokéSphere">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="icon" type="image/png" href="icons/icon-192.png">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%23ef4444'/><path d='M2 50 A48 48 0 0 0 98 50 Z' fill='%23ffffff'/><line x1='2' y1='50' x2='98' y2='50' stroke='%231e293b' stroke-width='8'/><circle cx='50' cy='50' r='16' fill='%23ffffff' stroke='%231e293b' stroke-width='8'/><circle cx='50' cy='50' r='8' fill='%23ffffff'/></svg>">
 </head>
 <body>
@@ -50,8 +57,12 @@
         </button>
       </nav>
 
-      <!-- Quick Audio Toggle & Randomizer -->
+      <!-- Quick Audio Toggle, Randomizer & Install PWA -->
       <div class="header-actions">
+        <button class="action-btn btn-install hidden" id="btnInstallApp" title="Instalar PokéSphere como App">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span class="btn-text-desktop">Instalar</span>
+        </button>
         <button class="action-btn" id="btnRandom" title="¡Sorpréndeme con un Pokémon aleatorio!">
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
           <span class="btn-text-desktop">Aleatorio</span>
