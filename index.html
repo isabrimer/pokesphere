@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>PokéSphere | Pokédex Definitiva</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%23ef4444'/><path d='M2 50 A48 48 0 0 0 98 50 Z' fill='%23ffffff'/><line x1='2' y1='50' x2='98' y2='50' stroke='%231e293b' stroke-width='8'/><circle cx='50' cy='50' r='16' fill='%23ffffff' stroke='%231e293b' stroke-width='8'/><circle cx='50' cy='50' r='8' fill='%23ffffff'/></svg>">
+</head>
+<body>
+  <!-- Background Glow & Particles -->
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
+  <!-- Main Navigation Header -->
+  <header class="app-header">
+    <div class="container header-content">
+      <div class="logo-area" id="btnLogo">
+        <div class="pokeball-icon-wrapper">
+          <div class="pokeball-mini spin-hover"></div>
+        </div>
+        <div class="logo-text">
+          <span class="logo-title">POKÉ<span class="accent-text">SPHERE</span></span>
+          <span class="logo-subtitle">Pokédex & Entrenador</span>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="nav-tabs">
+        <button class="nav-tab active" data-view="pokedex" id="tabPokedex">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 10 10H2A10 10 0 0 1 12 2z"/><circle cx="12" cy="12" r="3"/></svg>
+          <span>Pokédex</span>
+        </button>
+        <button class="nav-tab" data-view="favorites" id="tabFavorites">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          <span>Favoritos</span>
+          <span class="badge" id="favCount">0</span>
+        </button>
+        <button class="nav-tab" data-view="team" id="tabTeam">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span>Mi Equipo</span>
+          <span class="badge badge-team" id="teamCount">0/6</span>
+        </button>
+        <button class="nav-tab" data-view="quiz" id="tabQuiz">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><circle cx="12" cy="12" r="10"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span>Minijuego</span>
+        </button>
+      </nav>
+
+      <!-- Quick Audio Toggle & Randomizer -->
+      <div class="header-actions">
+        <button class="action-btn" id="btnRandom" title="¡Sorpréndeme con un Pokémon aleatorio!">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+          <span class="btn-text-desktop">Aleatorio</span>
+        </button>
+        <button class="action-btn icon-only" id="btnAudioToggle" title="Activar/Silenciar efectos">
+          <svg id="audioIconOn" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          <svg id="audioIconOff" class="hidden" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="container main-content">
+
+    <!-- VIEW: POKEDEX & FAVORITES -->
+    <section id="viewPokedex" class="app-view active">
+      <!-- Search & Filter Controls -->
+      <div class="controls-panel">
+        <div class="search-row">
+          <div class="search-box">
+            <svg class="search-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="searchInput" placeholder="Buscar por nombre o número (ej. Pikachu o 25)..." autocomplete="off">
+            <button class="clear-btn hidden" id="btnClearSearch" title="Borrar">✕</button>
+          </div>
+
+          <div class="select-wrapper">
+            <select id="selectGeneration" title="Filtrar por generación">
+              <option value="all">Todas las Regiones</option>
+              <option value="gen1">Gen 1 - Kanto (1-151)</option>
+              <option value="gen2">Gen 2 - Johto (152-251)</option>
+              <option value="gen3">Gen 3 - Hoenn (252-386)</option>
+              <option value="gen4">Gen 4 - Sinnoh (387-493)</option>
+              <option value="gen5">Gen 5 - Teselia (494-649)</option>
+              <option value="gen6">Gen 6 - Kalos (650-721)</option>
+              <option value="gen7">Gen 7 - Alola (722-809)</option>
+              <option value="gen8">Gen 8 - Galar (810-905)</option>
+              <option value="gen9">Gen 9 - Paldea (906-1025)</option>
+            </select>
+          </div>
+
+          <div class="select-wrapper">
+            <select id="selectSort" title="Ordenar lista">
+              <option value="id-asc">Número: Menor a Mayor</option>
+              <option value="id-desc">Número: Mayor a Menor</option>
+              <option value="name-asc">Nombre: A - Z</option>
+              <option value="name-desc">Nombre: Z - A</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Types Badges Filter Bar -->
+        <div class="type-filter-container">
+          <span class="filter-label">Tipos:</span>
+          <div class="type-filter-scroll" id="typeFilters">
+            <button class="type-pill active" data-type="all">Todos</button>
+            <!-- Generated dynamically with icons and colors -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Title / Status Bar -->
+      <div class="status-bar">
+        <div class="status-info">
+          <h2 id="currentViewTitle">Pokédex Nacional</h2>
+          <span id="resultCount" class="result-count">Cargando Pokémon...</span>
+        </div>
+      </div>
+
+      <!-- Pokemon Grid -->
+      <div class="pokemon-grid" id="pokemonGrid">
+        <!-- Dynamic Pokemon Cards -->
+      </div>
+
+      <!-- Loading Spinner / State -->
+      <div id="loadingIndicator" class="loading-state">
+        <div class="pokeball-spinner"></div>
+        <p>Capturando datos de Pokémon...</p>
+      </div>
+
+      <!-- Empty state -->
+      <div id="emptyState" class="empty-state hidden">
+        <div class="empty-icon">🔍</div>
+        <h3>No se encontraron Pokémon</h3>
+        <p>Prueba con otro nombre, número o cambia los filtros de tipo y región.</p>
+        <button class="btn-primary" id="btnResetFilters">Restablecer Filtros</button>
+      </div>
+
+      <!-- Load More Button -->
+      <div class="load-more-wrapper" id="loadMoreContainer">
+        <button class="btn-load-more" id="btnLoadMore">
+          <span>Cargar Más Pokémon</span>
+          <div class="pokeball-mini"></div>
+        </button>
+      </div>
+    </section>
+
+    <!-- VIEW: MI EQUIPO (TEAM BUILDER) -->
+    <section id="viewTeam" class="app-view">
+      <div class="team-header">
+        <div class="team-header-info">
+          <h2>Mi Equipo Pokémon</h2>
+          <p>Arma tu escuadrón ideal de hasta 6 Pokémon y analiza sus estadísticas de combate.</p>
+        </div>
+        <div class="team-header-actions">
+          <button class="btn-secondary" id="btnClearTeam">Vaciar Equipo</button>
+        </div>
+      </div>
+
+      <!-- 6 Team Slots -->
+      <div class="team-grid" id="teamGrid">
+        <!-- 6 slots dynamically rendered -->
+      </div>
+
+      <!-- Team Stats Summary Panel -->
+      <div class="team-analysis-panel hidden" id="teamAnalysis">
+        <h3>📊 Análisis Táctico del Equipo</h3>
+        <div class="team-stats-row">
+          <div class="stat-metric-card">
+            <span class="metric-title">Promedio PS</span>
+            <span class="metric-val" id="teamAvgHp">0</span>
+          </div>
+          <div class="stat-metric-card">
+            <span class="metric-title">Promedio Ataque</span>
+            <span class="metric-val" id="teamAvgAtk">0</span>
+          </div>
+          <div class="stat-metric-card">
+            <span class="metric-title">Promedio Defensa</span>
+            <span class="metric-val" id="teamAvgDef">0</span>
+          </div>
+          <div class="stat-metric-card">
+            <span class="metric-title">Promedio Velocidad</span>
+            <span class="metric-val" id="teamAvgSpeed">0</span>
+          </div>
+        </div>
+
+        <div class="team-types-coverage">
+          <h4>Cobertura Elemental de Tipos en el Equipo:</h4>
+          <div class="coverage-badges" id="teamTypeBadges"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW: QUIZ "¿QUIÉN ES ESE POKÉMON?" -->
+    <section id="viewQuiz" class="app-view">
+      <div class="quiz-container">
+        <div class="quiz-header">
+          <div class="quiz-badge">Minijuego Pokémon</div>
+          <h2>¿Quién es ese Pokémon?</h2>
+          <div class="quiz-score-card">
+            <div class="score-item">
+              <span class="score-label">Aciertos:</span>
+              <span class="score-val" id="quizStreak">0</span>
+            </div>
+            <div class="score-item">
+              <span class="score-label">Récord:</span>
+              <span class="score-val" id="quizHighScore">0</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-play-area">
+          <div class="quiz-screen">
+            <div class="quiz-silhouette-wrapper" id="quizSilhouetteWrapper">
+              <img id="quizPokemonImg" src="" alt="¿Quién es este Pokémon?" class="quiz-img silhouette">
+            </div>
+            <div class="quiz-reveal-text hidden" id="quizRevealName">¡Es Pikachu!</div>
+          </div>
+
+          <div class="quiz-options-grid" id="quizOptions">
+            <!-- 4 buttons populated dynamically -->
+          </div>
+
+          <div class="quiz-actions">
+            <button class="btn-primary" id="btnNextQuiz">Siguiente Pokémon ➔</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- POKEMON DETAILS MODAL -->
+  <div class="modal-overlay hidden" id="pokemonModal">
+    <div class="modal-card" id="modalCard">
+      <!-- Modal Header -->
+      <button class="modal-close-btn" id="btnModalClose" title="Cerrar modal">✕</button>
+
+      <div class="modal-body">
+        <!-- Visual Column -->
+        <div class="modal-visual" id="modalVisual">
+          <div class="modal-badges-top">
+            <span class="modal-id" id="modalPokemonId">#001</span>
+            <div class="modal-toggles">
+              <button class="btn-icon-round" id="btnModalCry" title="Reproducir rugido del Pokémon">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+              </button>
+              <button class="btn-icon-round" id="btnModalShiny" title="Alternar versión Variocolor (Shiny)">
+                ✨
+              </button>
+              <button class="btn-icon-round" id="btnModalFav" title="Guardar en favoritos">
+                ♥
+              </button>
+            </div>
+          </div>
+
+          <div class="modal-art-wrapper">
+            <div class="modal-art-bg"></div>
+            <img id="modalPokemonImg" src="" alt="Pokemon Art" class="modal-art-img">
+          </div>
+
+          <div class="shiny-indicator hidden" id="shinyIndicator">✨ Forma Variocolor (Shiny)</div>
+
+          <div class="modal-team-cta">
+            <button class="btn-team-add" id="btnModalTeam">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+              <span>Agregar al Equipo</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Info Column -->
+        <div class="modal-info">
+          <div class="modal-title-row">
+            <div>
+              <h2 id="modalPokemonName" class="modal-title">Bulbasaur</h2>
+              <p id="modalPokemonGenera" class="modal-genera">Pokémon Semilla</p>
+            </div>
+            <div class="modal-types" id="modalTypes"></div>
+          </div>
+
+          <!-- Description / Lore in Spanish -->
+          <div class="modal-description-box">
+            <h4>Descripción Pokédex</h4>
+            <p id="modalFlavorText">Cargando información del hábitat y comportamiento...</p>
+          </div>
+
+          <!-- Physical stats -->
+          <div class="modal-physical-grid">
+            <div class="physical-card">
+              <span class="phys-label">Altura</span>
+              <span class="phys-value" id="modalHeight">0.7 m</span>
+            </div>
+            <div class="physical-card">
+              <span class="phys-label">Peso</span>
+              <span class="phys-value" id="modalWeight">6.9 kg</span>
+            </div>
+            <div class="physical-card">
+              <span class="phys-label">Exp. Base</span>
+              <span class="phys-value" id="modalExp">64</span>
+            </div>
+            <div class="physical-card">
+              <span class="phys-label">Habilidades</span>
+              <span class="phys-value" id="modalAbilities">Espesura</span>
+            </div>
+          </div>
+
+          <!-- Base Stats bars -->
+          <div class="modal-stats-section">
+            <div class="stats-header">
+              <h4>Estadísticas de Combate</h4>
+              <span class="stats-total" id="modalStatsTotal">Total: 318</span>
+            </div>
+            <div class="stats-list" id="modalStatsList">
+              <!-- Dynamically rendered stat bars -->
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Audio Element for Cries -->
+  <audio id="cryAudioPlayer" preload="none"></audio>
+
+  <!-- Notification Toast -->
+  <div id="toastNotification" class="toast hidden"></div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="container footer-content">
+      <p>Diseñado con ❤️ para fanáticos de Pokémon. Datos proporcionados por <a href="https://pokeapi.co/" target="_blank" rel="noopener">PokéAPI</a>.</p>
+      <p class="disclaimer">Pokémon y las marcas registradas de Pokémon son propiedad de Nintendo, Creatures Inc. y Game Freak.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
